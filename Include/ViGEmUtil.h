@@ -10,8 +10,10 @@ VOID FORCEINLINE XUSB_TO_DS4_REPORT(
 {
     if (Input->wButtons & XUSB_GAMEPAD_BACK) Output->wButtons |= DS4_BUTTON_SHARE;
     if (Input->wButtons & XUSB_GAMEPAD_START) Output->wButtons |= DS4_BUTTON_OPTIONS;
-    if (Input->wButtons & XUSB_GAMEPAD_LEFT_THUMB) Output->wButtons |= DS4_BUTTON_THUMB_LEFT;
-    if (Input->wButtons & XUSB_GAMEPAD_RIGHT_THUMB) Output->wButtons |= DS4_BUTTON_THUMB_RIGHT;
+    if (Input->wButtons & XUSB_GAMEPAD_LEFT_THUMB
+        && Input->wButtons & XUSB_GAMEPAD_RIGHT_THUMB) Output->bSpecial |= DS4_SPECIAL_BUTTON_TOUCHPAD;
+    else if (Input->wButtons & XUSB_GAMEPAD_LEFT_THUMB) Output->wButtons |= DS4_BUTTON_THUMB_LEFT;
+    else if (Input->wButtons & XUSB_GAMEPAD_RIGHT_THUMB) Output->wButtons |= DS4_BUTTON_THUMB_RIGHT;
     if (Input->wButtons & XUSB_GAMEPAD_LEFT_SHOULDER) Output->wButtons |= DS4_BUTTON_SHOULDER_LEFT;
     if (Input->wButtons & XUSB_GAMEPAD_RIGHT_SHOULDER) Output->wButtons |= DS4_BUTTON_SHOULDER_RIGHT;
     if (Input->wButtons & XUSB_GAMEPAD_GUIDE) Output->bSpecial |= DS4_SPECIAL_BUTTON_PS;
